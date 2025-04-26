@@ -1,0 +1,53 @@
+{
+  "date": "2025-04-26",
+  "headlines": [
+    {
+      "title": "World Leaders Agree to Exchange Countries for a Day; Confusion Ensues",
+      "summary": "In an unprecedented move to foster global understanding, world leaders have agreed to run each other's countries for a day. The result? International confusion, hilarious miscommunication, and an uptick in global laughter rates.",
+      "category": "International",
+      "author": "Chuck Le Satir",
+      "isFeatured": true,
+      "imageUrl": "/images/2025-04-26.png"
+    },
+    {
+      "title": "Government Declares Siestas Mandatory, Citizens Rejoice and Private Sector Weeps",
+      "summary": "In a bid to increase national happiness, the government declared mandatory afternoon naps for all citizens. While the people are ecstatic, the private sector grapples with the sudden slump in midday productivity.",
+      "category": "Politics",
+      "author": "Iona Biggle"
+    },
+    {
+      "title": "Fortune Cookie Factory Declared Largest Economy; Economists Demand Recount",
+      "summary": "The world's largest fortune cookie factory, Luck Inc., was shockingly declared the world's largest economy today. Economists around the globe demand a recount, suspecting they've been served some bad fortunes.",
+      "category": "Business",
+      "author": "Moni Matters"
+    },
+    {
+      "title": "AI Creates Ultimate Distraction Device: The Never-Ending Cat Video",
+      "summary": "A revolutionary AI has figured out how to generate an infinite loop of unique, adorable cat videos, resulting in a worldwide drop in productivity. Rumor has it, top scientists are considering employing the AI for world peace negotiations.",
+      "category": "Technology",
+      "author": "Techie Tom"
+    },
+    {
+      "title": "Aliens Express Disappointment with Earth Music: 'Needs More Cowbell'",
+      "summary": "In a shocking turn of events, extraterrestrial beings, after years of monitoring Earth's radio frequencies, express disapproval of our music, saying it 'Needs more cowbell'. Music industry baffled, cowbell sales reach all-time high.",
+      "category": "Culture",
+      "author": "Culture Vulture"
+    },
+    {
+      "title": "Competitive Eating Introduced to Olympics; Hotdog Sales Skyrocket",
+      "summary": "The International Olympic Committee adds Competitive Eating to 2028 line-up. Predicted gold medalist Joey Chestnut celebrates by eating 200 hotdogs, causing a sudden spike in global hotdog sales.",
+      "category": "Sports",
+      "author": "Sporty Sandra"
+    }
+  ],
+  "weather": "Cloudy with a chance of meatballs and occasional showers of marshmallows today. Citizens are advised to keep coffee cups at the ready to capture some s'mores on their way to work.",
+  "letterFromCitizen": {
+    "name": "Paranoid Pete",
+    "letter": "Dear Journal, I've had it. First, was the ducks spying on us, next the squirrels and now our own dogs! Ever since the government introduced that new 'Eco-Friendly' pet food, my dog has been acting strange. I tell you, they're turning our pets into spies. Beware, friends, beware. Yours conspiracy-ly, Paranoid Pete."
+  },
+  "featuredImage": "/images/2025-04-26.png",
+  "temperature": {
+    "celsius": 22,
+    "fahrenheit": 72
+  }
+}
