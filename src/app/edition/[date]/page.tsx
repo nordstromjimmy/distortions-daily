@@ -129,8 +129,9 @@ export default function EditionPage({
       try {
         user = await account.get();
       } catch (error) {
-        console.error("User not logged in, redirecting to login...");
-        router.push("/login");
+        toast.success("You need to be logged in to save favorites!");
+        //console.error("User not logged in, redirecting to login...");
+        //router.push("/login");
         return;
       }
 
@@ -217,10 +218,12 @@ export default function EditionPage({
               <span className="text-xs uppercase text-pink-600 font-semibold tracking-wider">
                 {featured.category}
               </span>
-              <h2 className="text-3xl md:text-4xl font-bold mt-2">
+              <h2 className="text-3xl md:text-4xl font-display mt-2">
                 {featured.title}
               </h2>
-              <p className="mt-4 text-lg text-gray-700">{featured.summary}</p>
+              <p className="mt-4 text-lg text-gray-700 font-serif">
+                {featured.summary}
+              </p>
               <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
                 <p className="text-xs text-gray-500">
                   Author: {featured.author}
@@ -247,7 +250,9 @@ export default function EditionPage({
                   {headline.category}
                 </span>
                 <h3 className="text-xl font-bold mt-2">{headline.title}</h3>
-                <p className="mt-2 text-gray-700">{headline.summary}</p>
+                <p className="mt-2 text-gray-700 font-serif">
+                  {headline.summary}
+                </p>
               </div>
               <div className="flex justify-between items-center mt-6 pt-4 border-t border-gray-200">
                 <p className="text-xs text-gray-500">

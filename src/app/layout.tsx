@@ -40,6 +40,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
+          rel="stylesheet"
+        ></link>
+      </head>
       <body className="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
         <Header /> <main className="flex-1">{children}</main>
         <Footer />

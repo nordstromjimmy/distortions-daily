@@ -30,41 +30,42 @@ export default function SignupPage() {
   };
 
   return (
-    <main className="max-w-sm mx-auto py-12 px-4">
+    <main className="max-w-md  mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold text-center mb-6">
         Create Free Account
       </h1>
+      <div className="bg-white p-8 rounded-2xl">
+        <input
+          type="email"
+          placeholder="Email"
+          className="border p-2 rounded w-full mb-4"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
 
-      <input
-        type="email"
-        placeholder="Email"
-        className="border p-2 rounded w-full mb-4"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
+        <input
+          type="password"
+          placeholder="Password"
+          className="border p-2 rounded w-full mb-6"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <p className="text-red-500 text-center mb-2">{error}</p>
+        <button
+          onClick={handleSignup}
+          disabled={isLoading}
+          className="w-full py-2 bg-white text-gray-900 border border-gray-300 text-lg font-sans font-semibold rounded hover:bg-gray-100 transition cursor-pointer"
+        >
+          {isLoading ? "Creating..." : "Sign Up"}
+        </button>
 
-      <input
-        type="password"
-        placeholder="Password"
-        className="border p-2 rounded w-full mb-6"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <p className="text-red-500 text-center mb-2">{error}</p>
-      <button
-        onClick={handleSignup}
-        disabled={isLoading}
-        className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold cursor-pointer"
-      >
-        {isLoading ? "Creating..." : "Sign Up"}
-      </button>
-
-      <p className="text-center text-sm text-gray-500 mt-4">
-        Already have an account?{" "}
-        <a href="/login" className="text-blue-600 hover:underline">
-          Log In
-        </a>
-      </p>
+        <p className="text-center text-sm text-gray-500 mt-4">
+          Already have an account?{" "}
+          <a href="/login" className="text-blue-600 hover:underline">
+            Log In
+          </a>
+        </p>
+      </div>
     </main>
   );
 }

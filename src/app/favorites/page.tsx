@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { Client, Account, Databases, ID, Query } from "appwrite";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 const client = new Client()
   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
@@ -22,6 +23,8 @@ export default function FavoritesPage() {
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
+
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     const loadFavorites = async () => {
@@ -90,16 +93,22 @@ export default function FavoritesPage() {
 
   return (
     <main className="max-w-6xl mx-auto py-12 px-6">
+      <Link
+        href={`/edition/${today}`}
+        className="flex items-center justify-center w-64 mx-auto py-3 px-6 mb-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg rounded-full shadow-lg transition-all duration-300"
+      >
+        TODAY'S NEWS!
+      </Link>
       <div className="flex flex-row justify-around">
         {" "}
-        <h1 className="text-2xl font-bold mb-8 text-center hover:text-blue-600">
+        <h1 className="text-2xl font-display font-bold  mb-8 text-center hover:text-gray-600 underline">
           <a href="/archive">Archive</a>
         </h1>
-        <h1 className="text-2xl font-bold mb-8 text-center hover:text-blue-600">
+        <h1 className="text-2xl font-display font-bold  mb-8 text-center hover:text-gray-600 underline">
           <a href="/favorites">Favorites </a>
         </h1>
       </div>
-      <h1 className="text-lg font-bold mb-8 text-center">My Favorites⭐</h1>
+      <h1 className="text-lg font-serif mb-8 text-center">My Favorites</h1>
       <div className="grid gap-8 md:grid-cols-2">
         {favorites.map((favorite) => (
           <div

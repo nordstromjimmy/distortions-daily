@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { Client, Account, Databases, Query } from "appwrite";
+import Link from "next/link";
 
 interface Edition {
   date: string;
@@ -28,6 +29,8 @@ export default function ArchivePage() {
   const [editions, setEditions] = useState<Edition[]>([]);
   const [favorites, setFavorites] = useState<Favorite[]>([]);
   const router = useRouter();
+
+  const today = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,16 +88,22 @@ export default function ArchivePage() {
   // ✅ User is authenticated — show archive
   return (
     <main className="max-w-6xl mx-auto py-12 px-6">
+      <Link
+        href={`/edition/${today}`}
+        className="flex items-center justify-center w-64 mx-auto py-3 px-6 mb-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg rounded-full shadow-lg transition-all duration-300"
+      >
+        TODAY'S NEWS!
+      </Link>
       <div className="flex flex-row justify-around">
         {" "}
-        <h1 className="text-2xl font-bold mb-8 text-center hover:text-blue-600">
+        <h1 className="text-2xl font-display font-bold mb-8 text-center  hover:text-gray-600 underline">
           <a href="/archive">Archive</a>
         </h1>
-        <h1 className="text-2xl font-bold mb-8 text-center hover:text-blue-600">
+        <h1 className="text-2xl font-display font-bold mb-8 text-center hover:text-gray-600 underline">
           <a href="/favorites">Favorites</a>
         </h1>
       </div>
-      <h1 className="text-lg font-bold mb-8 text-center">The Archive</h1>
+      <h1 className="text-lg mb-8 font-serif text-center">The Archive</h1>
       {editions.length === 0 ? (
         <p className="text-center text-gray-500">No editions available yet.</p>
       ) : (
