@@ -29,7 +29,7 @@ Generate a daily edition including:
    - Culture
    - Sports
    - Weather (can be surreal/poetic if needed)
-3. A short 'Letter from a Citizen' (fictional citizen reflecting on the world satirically and sometimes with a conspiracy theory mindset).
+3. A short 'Letter from a Citizen' (fictional citizen reflecting on the world satirically and sometimes with a mindset of a real conspiracy theorist).
 
 **Special Instructions:**
 - You may reference real public figures (politicians, celebrities, CEOs) from time to time if it enhances the satire.

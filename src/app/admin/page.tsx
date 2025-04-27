@@ -1,21 +1,39 @@
 "use client";
-import { useEffect } from "react";
+
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function AdminPage() {
+  const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
+  const [passwordInput, setPasswordInput] = useState("");
   const [selectedDate, setSelectedDate] = useState("");
   const [isGenerating, setIsGenerating] = useState(false);
   const [message, setMessage] = useState("");
-
+  const [error, setError] = useState("");
   const router = useRouter();
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("isAdmin");
-    if (!isAdmin) {
-      router.push("/login");
+    const adminFlag = localStorage.getItem("isAdmin");
+    if (adminFlag === "true") {
+      setIsAdmin(true);
+    } else {
+      setIsAdmin(false);
     }
-  }, [router]);
+  }, []);
+
+  const handleLogin = () => {
+    if (passwordInput === process.env.NEXT_PUBLIC_ADMIN_PASSWORD) {
+      localStorage.setItem("isAdmin", "true");
+      setIsAdmin(true);
+    } else {
+      setError("Incorrect password.");
+    }
+  };
+
+  const handleLogOut = () => {
+    localStorage.removeItem("isAdmin");
+    setIsAdmin(false);
+  };
 
   const handleGenerateEdition = async () => {
     try {
@@ -44,19 +62,43 @@ export default function AdminPage() {
     }
   };
 
-  const handleLogOut = () => {
-    localStorage.removeItem("isAdmin");
-    router.push("/login");
-  };
+  if (isAdmin === null) {
+    // Still loading localStorage check
+    return <div className="text-center mt-10">Loading...</div>;
+  }
 
+  if (!isAdmin) {
+    // Not logged in → Show login form
+    return (
+      <main className="max-w-sm mx-auto py-12">
+        <h1 className="text-2xl font-bold mb-4 text-center">Admin Login</h1>
+        <input
+          type="password"
+          className="border p-2 rounded w-full mb-4"
+          placeholder="Enter Admin Password"
+          value={passwordInput}
+          onChange={(e) => setPasswordInput(e.target.value)}
+        />
+        <p className="text-red-500 text-center mb-2">{error}</p>
+        <button
+          onClick={handleLogin}
+          className="w-full py-2 bg-blue-600 hover:bg-blue-700 text-white rounded cursor-pointer"
+        >
+          Login
+        </button>
+      </main>
+    );
+  }
+
+  // ✅ Logged in → Show admin panel
   return (
-    <main className="max-w-2xl mx-auto py-12 px-6 text-gray-800">
+    <main className="max-w-2xl mx-auto py-8 px-6 text-gray-800">
       <div className="flex flex-row justify-between">
         {" "}
         <h1 className="text-4xl font-bold mb-6">Admin Panel</h1>
         <button
           onClick={handleLogOut}
-          className="bg-gray-900 text-white px-4 cursor-pointer"
+          className="bg-gray-900 text-white cursor-pointer p-2"
         >
           Log out
         </button>

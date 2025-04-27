@@ -1,8 +1,7 @@
 "use client";
-
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Client, Account } from "appwrite";
+import { Client, Account, ID } from "appwrite";
 
 const client = new Client();
 client
@@ -11,20 +10,20 @@ client
 
 const account = new Account(client);
 
-export default function LoginPage() {
+export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
 
-  const handleLogin = async () => {
+  const handleSignup = async () => {
     try {
       setIsLoading(true);
-      await account.createEmailPasswordSession(email, password);
-      router.push("/archive"); // Redirect to archive after login
+      await account.create(ID.unique(), email, password);
+      router.push("/login");
     } catch (error: any) {
-      setError("Login failed");
+      setError(error.message || "Signup failed.");
     } finally {
       setIsLoading(false);
     }
@@ -33,7 +32,7 @@ export default function LoginPage() {
   return (
     <main className="max-w-sm mx-auto py-12 px-4">
       <h1 className="text-3xl font-bold text-center mb-6">
-        Log in to view our Archive
+        Create Free Account
       </h1>
 
       <input
@@ -53,17 +52,17 @@ export default function LoginPage() {
       />
       <p className="text-red-500 text-center mb-2">{error}</p>
       <button
-        onClick={handleLogin}
+        onClick={handleSignup}
         disabled={isLoading}
         className="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white rounded font-semibold cursor-pointer"
       >
-        {isLoading ? "Logging in..." : "Log In"}
+        {isLoading ? "Creating..." : "Sign Up"}
       </button>
 
       <p className="text-center text-sm text-gray-500 mt-4">
-        Don't have an account?{" "}
-        <a href="/signup" className="text-blue-600 hover:underline">
-          Sign Up
+        Already have an account?{" "}
+        <a href="/login" className="text-blue-600 hover:underline">
+          Log In
         </a>
       </p>
     </main>

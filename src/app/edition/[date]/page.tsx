@@ -1,7 +1,13 @@
+"use client";
 import CitizenLetter from "@/app/components/CitizenLetter";
 import ShareButton from "@/app/components/ShareButton";
 import WeatherSection from "@/app/components/WeatherSection";
-import { notFound } from "next/navigation";
+import { Account, Client, Databases, ID, Query } from "appwrite";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import { use } from "react";
+import { Toaster, toast } from "sonner";
+import { Star } from "lucide-react";
 
 interface Headline {
   title: string;
@@ -26,6 +32,14 @@ interface Edition {
   };
 }
 
+const client = new Client();
+client
+  .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
+  .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
+
+const account = new Account(client);
+const databases = new Databases(client);
+
 // Helper to fetch the edition JSON
 async function fetchEdition(date: string): Promise<Edition | null> {
   try {
@@ -40,64 +54,145 @@ async function fetchEdition(date: string): Promise<Edition | null> {
   }
 }
 
-export default async function EditionPage({
+export default function EditionPage({
   params,
 }: {
-  params: { date: string };
+  params: Promise<{ date: string }>;
 }) {
-  const { date } = params;
-  const edition = await fetchEdition(date);
+  const { date } = use(params);
+  const [edition, setEdition] = useState<Edition | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [futureMode, setFutureMode] = useState(false);
+  const [favoriteId, setFavoriteId] = useState<string | null>(null);
+  const router = useRouter();
+
+  useEffect(() => {
+    const loadEdition = async () => {
+      try {
+        const today = new Date().toISOString().split("T")[0];
+        const requestedDate = new Date(date);
+        const normalizedRequestedDate = new Date(
+          requestedDate.toISOString().split("T")[0]
+        );
+        const normalizedToday = new Date(today);
+
+        if (normalizedRequestedDate > normalizedToday) {
+          setFutureMode(true);
+          setIsLoading(false);
+          return;
+        }
+
+        if (normalizedRequestedDate < normalizedToday) {
+          try {
+            await account.get();
+          } catch (error) {
+            router.push("/login");
+            return;
+          }
+        }
+
+        const fetchedEdition = await fetchEdition(date);
+        setEdition(fetchedEdition);
+
+        // 🛠 Now safely check favorites
+        try {
+          const user = await account.get();
+
+          const response = await databases.listDocuments(
+            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+            process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
+            [Query.equal("userId", user.$id), Query.equal("editionDate", date)]
+          );
+
+          if (response.total > 0) {
+            setFavoriteId(response.documents[0].$id);
+          } else {
+            setFavoriteId(null);
+          }
+        } catch (error) {
+          console.log("User not logged in — skipping favorite check");
+          setFavoriteId(null);
+        }
+      } catch (error) {
+        console.error("Failed to fetch edition:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadEdition();
+  }, [date, router]);
+
+  const handleFavorite = async () => {
+    try {
+      let user;
+      try {
+        user = await account.get();
+      } catch (error) {
+        console.error("User not logged in, redirecting to login...");
+        router.push("/login");
+        return;
+      }
+
+      if (favoriteId) {
+        // ⭐ Already favorited ➔ Unfavorite it
+        await databases.deleteDocument(
+          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+          process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
+          favoriteId
+        );
+
+        toast.success("Removed from Favorites!");
+        setFavoriteId(null);
+      } else {
+        // 🆕 Not yet favorited ➔ Favorite it
+        const response = await databases.createDocument(
+          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+          process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
+          ID.unique(),
+          {
+            userId: user.$id,
+            editionDate: edition?.date,
+            title: edition?.headlines[0]?.title || "Untitled",
+            imageUrl: edition?.headlines[0]?.imageUrl || "",
+          }
+        );
+
+        toast.success("Added to Favorites!");
+        setFavoriteId(response.$id);
+      }
+    } catch (error: any) {
+      console.error("Failed to handle favorite:", error.message);
+      toast.error("Something went wrong. Please try again.");
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <main className="flex items-center justify-center min-h-screen">
+        <p className="text-gray-500 animate-pulse">Loading edition...</p>
+      </main>
+    );
+  }
+
+  if (futureMode) {
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h1 className="text-4xl font-bold mb-4">Welcome to the Future! 🚀</h1>
+        <p className="text-gray-500">
+          This edition hasn’t been written yet. Check back later!
+        </p>
+      </main>
+    );
+  }
 
   if (!edition) {
-    // Enhanced missing edition logic
-    const requestedDate = new Date(date);
-    const today = new Date();
-
-    if (isNaN(requestedDate.getTime())) {
-      return notFound(); // Invalid date
-    }
-
-    // Normalize dates to ignore hours/mins/seconds
-    const normalizedRequestedDate = new Date(
-      requestedDate.toISOString().split("T")[0]
+    return (
+      <main className="flex flex-col items-center justify-center min-h-screen text-center">
+        <h1 className="text-4xl font-bold mb-4">Edition Not Found</h1>
+        <p className="text-gray-500">The requested edition does not exist.</p>
+      </main>
     );
-    const normalizedToday = new Date(today.toISOString().split("T")[0]);
-
-    if (normalizedRequestedDate > normalizedToday) {
-      // Future date
-      return (
-        <main className="h-screen flex flex-col justify-center items-center text-center">
-          <h1 className="text-4xl font-bold mb-4">
-            Welcome to the Future! 🚀{" "}
-          </h1>
-          <p className="text-gray-500">
-            This edition hasn’t been written yet. Check back later!
-          </p>
-        </main>
-      );
-    } else if (normalizedRequestedDate < normalizedToday) {
-      // Past date
-      return (
-        <main className="h-screen flex flex-col justify-center items-center text-center">
-          <h1 className="text-4xl font-bold mb-4">Archive Coming Soon 📜 </h1>
-          <p className="text-gray-500">
-            This past edition isn’t available yet. Stay tuned!
-          </p>
-        </main>
-      );
-    } else {
-      // Today but missing
-      return (
-        <main className="h-screen flex flex-col justify-center items-center text-center">
-          <h1 className="text-4xl font-bold mb-4">
-            🔄 Today's Edition is Loading...
-          </h1>
-          <p className="text-gray-500">
-            Our reporters are still typing. Refresh a little later!
-          </p>
-        </main>
-      );
-    }
   }
 
   const featured = edition.headlines.find((h) => h.isFeatured);
@@ -114,7 +209,7 @@ export default async function EditionPage({
                 <img
                   src={featured.imageUrl}
                   alt={featured.title}
-                  className="absolute inset-0 w-full h-full object-cover"
+                  className="absolute inset-0 w-full h-full object-scale-down"
                 />
               </div>
             )}
@@ -167,6 +262,7 @@ export default async function EditionPage({
             </article>
           ))}
         </section>
+
         {/* Weather Section */}
         <WeatherSection
           weather={edition.weather}
@@ -178,6 +274,37 @@ export default async function EditionPage({
           letter={edition.letterFromCitizen.letter}
           date={date}
         />
+      </div>
+      <div className="flex justify-center mt-2 mb-8">
+        <Toaster />
+        <button
+          onClick={handleFavorite}
+          className={`flex items-center gap-2 px-6 py-3 rounded-full shadow transition font-bold cursor-pointer ${
+            favoriteId
+              ? "bg-yellow-300 hover:bg-yellow-400 text-black"
+              : "bg-yellow-300 hover:bg-yellow-400 text-black"
+          }`}
+        >
+          {favoriteId ? (
+            <span className="flex items-center gap-2">
+              <Star
+                className="h-5 w-5 text-black"
+                fill="yellow"
+                stroke="black"
+              />
+              Saved to Favorites
+            </span>
+          ) : (
+            <span className="flex items-center gap-2">
+              <Star
+                className="h-5 w-5 text-black"
+                fill="white"
+                stroke="black"
+              />
+              Save to Favorites
+            </span>
+          )}
+        </button>
       </div>
     </main>
   );

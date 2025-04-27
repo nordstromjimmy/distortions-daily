@@ -9,8 +9,10 @@ export default function Footer() {
   if (hideHeader) return null; // Hide header on front page
   return (
     <footer className=" bg-gray-900 text-center text-sm text-white">
-      <div className="mt-2">© {new Date().getFullYear()} Distortions Daily</div>
-      <nav className="flex justify-center space-x-4 text-xs text-white mt-2 mb-2">
+      <div className="mt-4">
+        © {new Date().getFullYear()} Distortions Daily - all rights reserved
+      </div>
+      <nav className="flex justify-center space-x-4 text-xs text-white mt-2 mb-4">
         <a href="/about">About</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>

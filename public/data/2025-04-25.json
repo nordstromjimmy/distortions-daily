@@ -1,0 +1,47 @@
+{
+  "date": "2025-04-25",
+  "headlines": [
+    {
+      "title": "World Leaders Engage in Epic Dance-Off to Settle Trade Dispute",
+      "summary": "Escalating trade tensions took a surprising turn when leaders of disputing countries decided to settle the matter through a dance-off. In a move lauded by dance community, where leaders' dance skills are being scrutinized instead of their political acumen.",
+      "category": "Politics",
+      "author": "Jittery Jill Jackson",
+      "isFeatured": true,
+      "imageUrl": "/images/2025-04-25.png"
+    },
+    {
+      "title": "Amazon Acquires Siberia: Prime Shipping Now Available",
+      "summary": "In a shocking move, CEO, Jeff Bezos added Siberia to his shopping cart. Customers in Siberia can now enjoy 2-day delivery and ice-cold deals year-round. Environmentalists question the legality, but Siberian natives are just happy they can finally order heated socks.",
+      "category": "Business",
+      "author": "E-commerce Eva Evans"
+    },
+    {
+      "title": "Apple Launches iEye, The Ultimate Retina Display",
+      "summary": "The tech giant reveals its latest invention, the Apple iEye. It's not just another device, it's a full-eye replacement enhancing human vision with digital capabilities. Critics question privacy concerns, while others are just thrilled about finally seeing the world in 4K.",
+      "category": "Technology",
+      "author": "Techy Terry Thompson"
+    },
+    {
+      "title": "Kanye West Declares Himself New Da Vinci, Still Can't Draw a Straight Line",
+      "summary": "Music mega-star and part-time presidential candidate, Kanye West, proclaimed himself the reincarnation of Leonardo Da Vinci. Art critics remain skeptical after examining his abstract doodle of a stick figure riding a bicycle.",
+      "category": "Culture",
+      "author": "Artsy Alice Anderson"
+    },
+    {
+      "title": "Aliens Win Interstellar Olympics, Earth Athletes Demand Drug Testing",
+      "summary": "Following the Intergalactic Olympics' conclusion, earth athletes demand alien winners undergo drug testing. Despite the uproar, event organizers maintain that 'Martian juice' is merely a high-protein shake.",
+      "category": "Sports",
+      "author": "Sporty Sam Smith"
+    }
+  ],
+  "weather": "Partly cloudy with a chance of flying pigs. Highs of 75, lows of -15. Yes, that's right, -15. Someone left the freezer door open again.",
+  "letterFromCitizen": {
+    "name": "Conspiracy Carl",
+    "letter": "Ever noticed how every time there's an election, the price of avocados drops? Wake up people! They're using avocados to control our minds! Trust me, it's all in Chapter 7 of my upcoming book, 'Guacamole Gate: How Avocados are Ruining Democracy'."
+  },
+  "featuredImage": "/images/2025-04-25.png",
+  "temperature": {
+    "celsius": -6,
+    "fahrenheit": 21
+  }
+}
