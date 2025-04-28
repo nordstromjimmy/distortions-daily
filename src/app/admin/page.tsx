@@ -1,36 +1,6 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-
-export const metadata = {
-  title: "Distortions Daily - Satirical News From Another Reality",
-  description:
-    "Daily transmissions from a world almost like ours... but not quite. Satirical takes on today's real events.",
-  openGraph: {
-    title: "Distortions Daily - Satirical News From Another Reality",
-    description:
-      "Explore daily news with a satirical twist, only at Distortions Daily.",
-    url: "https://distortionsdaily.com",
-    siteName: "Distortions Daily",
-    images: [
-      {
-        url: "/og-image.png", // 👈 we'll design this
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "en_US",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Distortions Daily - Satirical News From Another Reality",
-    description:
-      "Explore daily news with a satirical twist, only at Distortions Daily.",
-    images: ["/og-image.png"],
-  },
-};
 
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);

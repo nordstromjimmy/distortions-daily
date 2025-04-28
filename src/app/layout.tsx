@@ -1,6 +1,7 @@
 import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import Head from "next/head";
 
 export const metadata = {
   title:
@@ -43,7 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <head>
+      <Head>
         <script
           defer
           data-domain="distortionsdaily.com"
@@ -58,7 +59,8 @@ export default function RootLayout({
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
           rel="stylesheet"
         ></link>
-      </head>
+      </Head>
+
       <body className="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
         <Header /> <main className="flex-1">{children}</main>
         <Footer />
