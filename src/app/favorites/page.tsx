@@ -69,19 +69,28 @@ export default function FavoritesPage() {
 
   if (favorites.length === 0) {
     return (
-      <main className="max-w-6xl mx-auto py-12 px-6">
+      <main className="max-w-6xl mx-auto py-6 px-6">
+        <Link
+          href={`/edition/${today}`}
+          className="flex items-center justify-center w-64 mx-auto py-3 px-6 mb-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg rounded-full shadow-lg transition-all duration-300"
+        >
+          TODAY'S NEWS!
+        </Link>
+
         <div className="flex flex-row justify-around">
           {" "}
-          <h1 className="text-4xl font-bold mb-8 text-center">
+          <h1 className="text-2xl font-display font-bold  mb-8 text-center hover:text-gray-600 underline">
             <a href="/archive">Archive</a>
           </h1>
-          <h1 className="text-4xl font-bold mb-8 text-center">
+          <h1 className="text-2xl font-display font-bold  mb-8 text-center hover:text-gray-600 underline">
             <a href="/favorites">Favorites </a>
           </h1>
         </div>
         <div className="flex flex-col items-center justify-center mt-22 text-center">
           {" "}
-          <h1 className="text-4xl font-bold mb-4">No Favorites Yet</h1>
+          <h1 className="text-2xl md:text-4xl font-bold mb-4">
+            No Favorites Yet
+          </h1>
           <p className="text-gray-500">
             Save editions to your favorites to see them here!
           </p>
@@ -91,7 +100,7 @@ export default function FavoritesPage() {
   }
 
   return (
-    <main className="max-w-6xl mx-auto py-12 px-6">
+    <main className="max-w-6xl mx-auto py-6 px-6">
       <Link
         href={`/edition/${today}`}
         className="flex items-center justify-center w-64 mx-auto py-3 px-6 mb-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg rounded-full shadow-lg transition-all duration-300"

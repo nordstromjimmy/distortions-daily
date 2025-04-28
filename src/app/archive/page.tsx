@@ -86,7 +86,7 @@ export default function ArchivePage() {
 
   // ✅ User is authenticated — show archive
   return (
-    <main className="max-w-6xl mx-auto py-12 px-6">
+    <main className="max-w-6xl mx-auto py-6 px-6">
       <Link
         href={`/edition/${today}`}
         className="flex items-center justify-center w-64 mx-auto py-3 px-6 mb-4 bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg rounded-full shadow-lg transition-all duration-300"

@@ -34,7 +34,7 @@ export default function LandingPage() {
     <main className="min-h-screen bg-gray-100 flex flex-col justify-center items-center space-y-6 px-6">
       {/* Icon */}
       <Newspaper className="w-24 h-24 text-gray-700" />
-      <h1 className="text-5xl md:text-7xl font-display font-extrabold tracking-tight text-gray-900">
+      <h1 className="text-5xl text-center md:text-7xl font-display font-extrabold tracking-tight text-gray-900">
         Distortions Daily
       </h1>
 

@@ -10,7 +10,7 @@ export default function Footer() {
   return (
     <footer className=" bg-gray-900 text-center text-sm text-white">
       <div className="mt-4">
-        © {new Date().getFullYear()} Distortions Daily - all rights reserved
+        © Distortions Daily {new Date().getFullYear()}, All Rights Reserved
       </div>
       <nav className="flex justify-center space-x-4 text-xs text-white mt-2 mb-4">
         <a href="/about">About</a>
