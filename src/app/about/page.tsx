@@ -30,20 +30,38 @@ export const metadata = {
 export default function AboutPage() {
   return (
     <main className="max-w-2xl mx-auto py-12 px-6 text-gray-800">
-      <h1 className="text-4xl font-bold mb-6">About Distortions Daily</h1>
-      <p className="mb-4">
-        Welcome to Distortions Daily, this is a satirical daily news publication
-        delivering absurd, ironic, and slightly misaligned versions of
-        real-world events. Every day, we reimagine headlines, twist reality just
-        a little, and present a new take on the world you thought you knew.
+      <h1 className="text-4xl font-display font-bold mb-6">
+        About Distortions Daily
+      </h1>
+
+      <p className="mb-4 font-serif text-lg">
+        Welcome to <strong>Distortions Daily</strong> — a satirical news outlet
+        where reality gets a playful twist. Every day, we reimagine major
+        headlines with a dash of absurdity, irony, and good old-fashioned
+        nonsense.
       </p>
-      <p className="mb-4">
-        All articles, headlines, characters, and quotes featured on this site
-        are fictional and intended purely for entertainment purposes. References
-        to real individuals, organizations, or events are used in a satirical
-        context and should not be interpreted as factual reporting.
+
+      <p className="mb-4 font-serif text-lg">
+        Our daily editions reflect a slightly off-kilter version of the world
+        you think you know. From politics and business to technology and
+        culture, nothing is safe from satire.
       </p>
-      <p>Our mission is simple: to reflect reality's chaos — with a grin.</p>
+
+      <p className="mb-4 font-serif text-lg">
+        <strong>Important:</strong> All articles, headlines, characters, and
+        quotes on this site are entirely fictional and intended for
+        entertainment purposes only. Any resemblance to real persons or events
+        is purely satirical.
+      </p>
+
+      <p className="mb-4 font-serif text-lg">
+        Distortions Daily is where chaos meets creativity — and where the line
+        between fake and real blurs... intentionally.
+      </p>
+
+      <p className="mt-8 font-sans text-sm text-gray-500">
+        Distortions Daily &copy; {new Date().getFullYear()}
+      </p>
     </main>
   );
 }
