@@ -8,6 +8,78 @@ import { useEffect, useState } from "react";
 import { use } from "react";
 import { Toaster, toast } from "sonner";
 import { Star } from "lucide-react";
+import { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { date: string };
+}): Promise<Metadata> {
+  const { date } = params;
+
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/data/${date}.json`
+    );
+
+    if (!res.ok) {
+      return {
+        title: `Edition ${date} - Distortions Daily`,
+        description: `Catch today's satirical edition from Distortions Daily.`,
+      };
+    }
+
+    const edition = await res.json();
+
+    const featuredHeadline = edition.headlines.find((h: any) => h.isFeatured);
+
+    return {
+      title: `${
+        featuredHeadline?.title || `Edition ${date}`
+      } - Distortions Daily`,
+      description: `${
+        featuredHeadline?.summary ||
+        "Explore today's satirical headlines from a reality almost like ours... but not quite."
+      }`,
+      openGraph: {
+        title: `${
+          featuredHeadline?.title || `Edition ${date}`
+        } - Distortions Daily`,
+        description: `${
+          featuredHeadline?.summary ||
+          "Satirical takes on today's biggest news events."
+        }`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/edition/${date}`,
+        siteName: "Distortions Daily",
+        images: [
+          {
+            url: "/og-image.png", // or generate custom edition OGs later
+            width: 1200,
+            height: 630,
+          },
+        ],
+        type: "article",
+      },
+      twitter: {
+        card: "summary_large_image",
+        title: `${
+          featuredHeadline?.title || `Edition ${date}`
+        } - Distortions Daily`,
+        description: `${
+          featuredHeadline?.summary ||
+          "Satirical news from an alternate reality."
+        }`,
+        images: ["/og-image.png"],
+      },
+    };
+  } catch (error) {
+    console.error("Error generating metadata:", error);
+    return {
+      title: `Distortions Daily`,
+      description: "Explore daily satirical news at Distortions Daily.",
+    };
+  }
+}
 
 interface Headline {
   title: string;
@@ -190,8 +262,8 @@ export default function EditionPage({
   if (!edition) {
     return (
       <main className="flex flex-col items-center justify-center min-h-screen text-center">
-        <h1 className="text-4xl font-bold mb-4">Edition Not Found</h1>
-        <p className="text-gray-500">The requested edition does not exist.</p>
+        <h1 className="text-4xl font-bold mb-4">Edition Not Written Yet</h1>
+        <p className="text-gray-500">Our reporters are slacking, again...</p>
       </main>
     );
   }

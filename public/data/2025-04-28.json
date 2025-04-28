@@ -1,0 +1,53 @@
+{
+  "date": "2025-04-28",
+  "headlines": [
+    {
+      "title": "Aliens Found in Space, Demand Earthlings' Netflix Passwords",
+      "summary": "Extraterrestrial life has finally been discovered, and their first demand isn’t world peace but our Netflix usernames and passwords. They stress that they have no interest in invading, but expect uninterrupted access to 'The Good Place', 'Breaking Bad' and 'Stranger Things'.",
+      "category": "Science",
+      "author": "I.M. Baffled",
+      "isFeatured": true,
+      "imageUrl": "/images/2025-04-28.png"
+    },
+    {
+      "title": "President Uses Wrong Filter During National Address, Becomes a Cat",
+      "summary": "In a historic moment, the President delivered his weekly address as an animated cat due to a Zoom filter mishap. He continued the address without noticing, making it the most-watched presidential broadcast of all time.",
+      "category": "Politics",
+      "author": "Hugh Morus"
+    },
+    {
+      "title": "Elon Musk Buys The Moon, Plans to Turn it Into Giant Tesla Logo",
+      "summary": "Risk-taking CEO Elon Musk has now outdone himself by buying the Moon. He claims he will replace the surface with LED screens to turn the heavenly body into a giant Tesla logo, visible from Earth.",
+      "category": "Business",
+      "author": "Holden McGroyn"
+    },
+    {
+      "title": "AI Develops Self-Doubt, Keeps Asking 'Am I Doing This Right?'",
+      "summary": "In an unprecedented development, an AI has developed self-doubt, and has begun asking its operators for validation every few seconds. Experts are calling it the beginning of the teenage phase for AI.",
+      "category": "Technology",
+      "author": "Candice B. Fureal"
+    },
+    {
+      "title": "Global Cult Formed Around New TikTok Dance, 'The Existential Dread Shuffle'",
+      "summary": "Millions have joined the newest TikTok trend, a dance called 'The Existential Dread Shuffle' that was created to express the collective ennui of living in the 2020s. Critics call it 'the Macarena of our time'.",
+      "category": "Culture",
+      "author": "Barry McCaulkiner"
+    },
+    {
+      "title": "Footballer Suspended For Wearing Clown Shoes During Match",
+      "summary": "In a bizarre turn of events, a top-tier football player has been suspended for wearing clown shoes during a match. The player defended his choice, stating he was just trying to 'add some humor to the game'.",
+      "category": "Sports",
+      "author": "Ben Dover"
+    }
+  ],
+  "weather": "Today's forecast: Cloudy with a chance of falling cheese wheels — a glitch in the weather simulation, or an act of divine capriciousness? Meteorologists remain stumped and lactose intolerant citizens are advised to stay indoors.",
+  "letterFromCitizen": {
+    "name": "Conspiracy Ken",
+    "letter": "Dear Editor, I've been saying it for years, and now it's finally happened. Aliens are among us, and they've got their slimy green fingers on our Netflix. I told everyone they'd go after the important things, but nobody listened! Now, we're all at risk. Worse, I suspect Elon Musk is in cahoots with them. Buying the moon, indeed! It's clearly a distraction. Keep your eyes open, people. Yours in vigilance, Conspiracy Ken."
+  },
+  "featuredImage": "/images/2025-04-28.png",
+  "temperature": {
+    "celsius": 10,
+    "fahrenheit": 50
+  }
+}

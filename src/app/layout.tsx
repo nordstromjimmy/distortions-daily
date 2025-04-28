@@ -5,6 +5,9 @@ import Header from "./components/Header";
 export const metadata = {
   title:
     "Distortions Daily - daily satirical news twists from a universe slightly off course",
+  icons: {
+    icon: "/favicon.ico",
+  },
   description:
     "Where reality gets reimagined daily. Daily satirical news twists from a universe slightly off course.",
   openGraph: {
@@ -41,6 +44,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
+        <script
+          defer
+          data-domain="distortionsdaily.com"
+          src="https://plausible.io/js/script.js"
+        ></script>
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4372906584866838"
+          crossOrigin="anonymous"
+        ></script>
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
           rel="stylesheet"

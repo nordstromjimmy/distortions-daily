@@ -5,6 +5,35 @@ import { useRouter } from "next/navigation";
 import { Client, Account, Databases, Query } from "appwrite";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Distortions Daily - Satirical News From Another Reality",
+  description:
+    "Daily transmissions from a world almost like ours... but not quite. Satirical takes on today's real events.",
+  openGraph: {
+    title: "Distortions Daily - Satirical News From Another Reality",
+    description:
+      "Explore daily news with a satirical twist, only at Distortions Daily.",
+    url: "https://distortionsdaily.com",
+    siteName: "Distortions Daily",
+    images: [
+      {
+        url: "/og-image.png", // 👈 we'll design this
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Distortions Daily - Satirical News From Another Reality",
+    description:
+      "Explore daily news with a satirical twist, only at Distortions Daily.",
+    images: ["/og-image.png"],
+  },
+};
+
 interface Edition {
   date: string;
   title: string;
@@ -107,7 +136,7 @@ export default function ArchivePage() {
       {editions.length === 0 ? (
         <p className="text-center text-gray-500">No editions available yet.</p>
       ) : (
-        <div className="grid gap-8 md:grid-cols-2">
+        <div className="grid gap-8 md:grid-cols-4">
           {editions.map((edition) => {
             const isFavorited = favorites.some(
               (fav) => fav.editionDate === edition.date
@@ -129,11 +158,11 @@ export default function ArchivePage() {
                   <img
                     src={edition.featuredImage}
                     alt={edition.title}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-38 object-cover"
                   />
                 )}
                 <div className="p-6 flex flex-col flex-grow">
-                  <h2 className="text-2xl font-bold mb-2">{edition.title}</h2>
+                  <h2 className="text-md font-bold mb-2">{edition.title}</h2>
                   <p className="text-gray-500 text-sm mb-4">{edition.date}</p>
                   <a
                     href={`/edition/${edition.date}`}

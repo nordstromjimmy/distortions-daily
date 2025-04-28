@@ -5,6 +5,35 @@ import { Client, Account, Databases, ID, Query } from "appwrite";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+export const metadata = {
+  title: "Distortions Daily - Satirical News From Another Reality",
+  description:
+    "Daily transmissions from a world almost like ours... but not quite. Satirical takes on today's real events.",
+  openGraph: {
+    title: "Distortions Daily - Satirical News From Another Reality",
+    description:
+      "Explore daily news with a satirical twist, only at Distortions Daily.",
+    url: "https://distortionsdaily.com",
+    siteName: "Distortions Daily",
+    images: [
+      {
+        url: "/og-image.png", // 👈 we'll design this
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Distortions Daily - Satirical News From Another Reality",
+    description:
+      "Explore daily news with a satirical twist, only at Distortions Daily.",
+    images: ["/og-image.png"],
+  },
+};
+
 const client = new Client()
   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
   .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
@@ -109,7 +138,7 @@ export default function FavoritesPage() {
         </h1>
       </div>
       <h1 className="text-lg font-serif mb-8 text-center">My Favorites</h1>
-      <div className="grid gap-8 md:grid-cols-2">
+      <div className="grid gap-8 md:grid-cols-4">
         {favorites.map((favorite) => (
           <div
             key={favorite.$id}
@@ -119,12 +148,12 @@ export default function FavoritesPage() {
               <img
                 src={favorite.imageUrl}
                 alt={favorite.title}
-                className="w-full h-48 object-cover"
+                className="w-full h-38 object-cover"
               />
             )}
 
             <div className="p-6 flex flex-col flex-grow">
-              <h2 className="text-2xl font-bold mb-2">{favorite.title}</h2>
+              <h2 className="text-md font-bold mb-2">{favorite.title}</h2>
               <p className="text-gray-500 text-sm mb-4">
                 {favorite.editionDate}
               </p>

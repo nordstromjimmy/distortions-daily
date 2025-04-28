@@ -53,35 +53,37 @@ export default function Header() {
           {" "}
           <Link
             href={"/"}
-            className="text-4xl font-display font-extrabold text-white hover:text-gray-600"
+            className="text-4xl font-display font-extrabold text-white hover:text-gray-300"
           >
             Distortions Daily
           </Link>
           <span className="bg-red-600 text-white text-xs font-bold rounded-full  ml-4 px-3 py-1 tracking-wider">
             NEWS
           </span>
-          <p className="text-sm mt-2 text-gray-400 italic">Todays Edition</p>
+          <p className="text-sm mt-2 text-gray-400 italic">
+            Todays Date - {today}
+          </p>
         </div>
 
         {/* Desktop Menu */}
         <nav className="hidden md:flex space-x-6 font-sans">
           <Link
             href="/archive"
-            className="text-white hover:text-gray-600 transition font-semibold"
+            className="text-white hover:text-yellow-400 transitiofont-semibold"
           >
             Archive
           </Link>
           {!isAuthenticated ? (
             <Link
               href="/signup"
-              className="text-white hover:text-gray-600 transition font-semibold"
+              className="text-white hover:text-yellow-400 transition font-semibold"
             >
               Sign Up
             </Link>
           ) : (
             <button
               onClick={handleLogout}
-              className="text-white hover:text-gray-600 transition font-semibold cursor-pointer"
+              className="text-white hover:text-red-400 transition font-semibold cursor-pointer"
             >
               Logout
             </button>
@@ -92,7 +94,7 @@ export default function Header() {
         {/* Mobile Menu Button */}
         <button
           onClick={() => setIsMenuOpen(!isMenuOpen)}
-          className="md:hidden text-white focus:outline-none"
+          className="md:hidden text-white text-2xl focus:outline-none"
         >
           ☰
         </button>
@@ -115,7 +117,7 @@ export default function Header() {
           ) : (
             <button
               onClick={handleLogout}
-              className="text-white hover:text-blue-600 transition font-semibold cursor-pointer"
+              className="text-white font-semibold cursor-pointer"
             >
               Logout
             </button>
