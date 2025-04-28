@@ -1,7 +1,7 @@
 import "./globals.css";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
-import Head from "next/head";
+import Analytics from "./components/Analytics";
 
 export const metadata = {
   title:
@@ -44,25 +44,17 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <script
-          defer
-          data-domain="distortionsdaily.com"
-          src="https://plausible.io/js/script.js"
-        ></script>
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4372906584866838"
-          crossOrigin="anonymous"
-        ></script>
+      <head>
+        {/* Just your normal stuff here like fonts */}
         <link
           href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Merriweather:wght@400;700&family=Playfair+Display:wght@400;700&display=swap"
           rel="stylesheet"
-        ></link>
-      </Head>
-
+        />
+      </head>
       <body className="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
-        <Header /> <main className="flex-1">{children}</main>
+        <Analytics /> {/* 👈 Add your scripts here safely */}
+        <Header />
+        <main className="flex-1">{children}</main>
         <Footer />
       </body>
     </html>
