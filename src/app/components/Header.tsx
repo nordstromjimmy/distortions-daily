@@ -52,7 +52,7 @@ export default function Header() {
         <div>
           {" "}
           <Link
-            href={"/"}
+            href={`/edition/${today}`}
             className="text-4xl font-display font-extrabold text-white hover:text-gray-300"
           >
             Distortions Daily
