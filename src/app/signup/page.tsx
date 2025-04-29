@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Client, Account, ID } from "appwrite";
+import { Toaster, toast } from "sonner";
 
 const client = new Client();
 client
@@ -14,7 +15,6 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleSignup = async () => {
@@ -23,7 +23,8 @@ export default function SignupPage() {
       await account.create(ID.unique(), email, password);
       router.push("/login");
     } catch (error: any) {
-      setError(error.message || "Signup failed.");
+      console.log(error.message);
+      toast.error("Signup failed" + error.message);
     } finally {
       setIsLoading(false);
     }
@@ -50,7 +51,7 @@ export default function SignupPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <p className="text-red-500 text-center mb-2">{error}</p>
+        <Toaster />
         <button
           onClick={handleSignup}
           disabled={isLoading}

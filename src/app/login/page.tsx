@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Client, Account } from "appwrite";
+import { Toaster, toast } from "sonner";
 
 const client = new Client();
 client
@@ -14,7 +15,6 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState("");
   const router = useRouter();
 
   const handleLogin = async () => {
@@ -23,7 +23,7 @@ export default function LoginPage() {
       await account.createEmailPasswordSession(email, password);
       router.push("/archive"); // Redirect to archive after login
     } catch (error: any) {
-      setError("Login failed");
+      toast.error("Login failed");
     } finally {
       setIsLoading(false);
     }
@@ -51,7 +51,7 @@ export default function LoginPage() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
         />
-        <p className="text-red-500 text-center mb-2">{error}</p>
+        <Toaster />
         <button
           onClick={handleLogin}
           disabled={isLoading}
