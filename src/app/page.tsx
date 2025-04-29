@@ -30,6 +30,7 @@ export const metadata = {
 };
 
 export default function LandingPage() {
+  const today = new Date().toISOString().split("T")[0];
   return (
     <main className="min-h-screen bg-gray-100 flex flex-col justify-center items-center space-y-6 px-6">
       {/* Icon */}
@@ -45,7 +46,7 @@ export default function LandingPage() {
 
       <div className="flex gap-4 justify-center mt-8">
         <a
-          href={`/edition/${new Date().toISOString().split("T")[0]}`}
+          href={`/edition/${today}`}
           className="px-6 py-3 bg-gray-900 text-white text-lg font-sans font-semibold rounded hover:bg-gray-800 transition"
         >
           Read Today's Edition →
