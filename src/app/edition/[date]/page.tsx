@@ -69,20 +69,22 @@ export default function EditionPage({
   useEffect(() => {
     const loadEdition = async () => {
       try {
-        const today = new Date().toISOString().split("T")[0];
-        const requestedDate = new Date(date);
-        const normalizedRequestedDate = new Date(
-          requestedDate.toISOString().split("T")[0]
-        );
-        const normalizedToday = new Date(today);
+        // ✅ Get local date in YYYY-MM-DD format (safe from timezone bugs)
+        const localToday = new Date(
+          Date.now() - new Date().getTimezoneOffset() * 60000
+        )
+          .toISOString()
+          .split("T")[0];
 
-        if (normalizedRequestedDate > normalizedToday) {
+        // ✅ Compare directly as strings — safe and simple
+        if (date > localToday) {
           setFutureMode(true);
           setIsLoading(false);
           return;
         }
 
-        if (normalizedRequestedDate < normalizedToday) {
+        if (date < localToday) {
+          // ✅ Archive access — must be logged in
           try {
             await account.get();
           } catch (error) {
@@ -91,10 +93,11 @@ export default function EditionPage({
           }
         }
 
+        // ✅ Load edition JSON
         const fetchedEdition = await fetchEdition(date);
         setEdition(fetchedEdition);
 
-        // 🛠 Now safely check favorites
+        // ✅ If user is logged in, check for saved favorite
         try {
           const user = await account.get();
 
@@ -114,7 +117,7 @@ export default function EditionPage({
           setFavoriteId(null);
         }
       } catch (error) {
-        console.error("Failed to fetch edition:", error);
+        console.error("Failed to load edition:", error);
       } finally {
         setIsLoading(false);
       }
