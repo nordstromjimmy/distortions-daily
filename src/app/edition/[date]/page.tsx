@@ -8,31 +8,6 @@ import { useEffect, useState } from "react";
 import { use } from "react";
 import { Toaster, toast } from "sonner";
 import { Star } from "lucide-react";
-import { Metadata } from "next";
-
-export async function generateMetadata({
-  params,
-}: {
-  params: { date: string };
-}): Promise<Metadata> {
-  const { date } = params;
-
-  return {
-    title: `Distortions Daily – Edition ${date}`,
-    description: `Read the absurd headlines of ${date} from an alternate reality.`,
-    openGraph: {
-      title: `Distortions Daily – ${date}`,
-      description: `Explore today's satire from another timeline.`,
-      images: [`/images/${date}.png`], // ✅ Your dynamic image
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: `Distortions Daily – ${date}`,
-      description: `Read the absurd headlines of ${date} from an alternate reality.`,
-      images: [`/images/${date}.png`],
-    },
-  };
-}
 
 interface Headline {
   title: string;
