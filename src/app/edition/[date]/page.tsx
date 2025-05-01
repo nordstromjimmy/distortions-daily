@@ -1,4 +1,3 @@
-// app/edition/[date]/page.tsx
 import { Metadata } from "next";
 import fs from "fs/promises";
 import path from "path";
@@ -9,7 +8,7 @@ export async function generateMetadata({
 }: {
   params: { date: string };
 }): Promise<Metadata> {
-  const { date } = params;
+  const date = params.date;
 
   return {
     title: `Distortions Daily – Edition ${date}`,
