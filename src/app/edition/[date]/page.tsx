@@ -4,10 +4,12 @@ import fs from "fs/promises";
 import path from "path";
 import EditionClient from "@/app/components/EditionClient";
 
-export async function generateMetadata(props: {
+export async function generateMetadata({
+  params,
+}: {
   params: { date: string };
 }): Promise<Metadata> {
-  const { date } = props.params;
+  const { date } = params;
 
   return {
     title: `Distortions Daily – Edition ${date}`,
