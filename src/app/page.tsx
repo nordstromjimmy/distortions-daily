@@ -1,4 +1,5 @@
 import { Newspaper } from "lucide-react";
+import Link from "next/link";
 
 export const metadata = {
   title: "Distortions Daily - Satirical News From Another Reality",
@@ -45,12 +46,12 @@ export default function LandingPage() {
       </p>
 
       <div className="flex gap-4 justify-center mt-8">
-        <a
+        <Link
           href={`/edition/${today}`}
           className="px-6 py-3 bg-gray-900 text-white text-lg font-sans font-semibold rounded hover:bg-gray-800 transition"
         >
-          Read Today's Edition →
-        </a>
+          Read Today’s Edition →
+        </Link>
         <a
           href="/archive"
           className="px-6 py-3 bg-white text-gray-900 border border-gray-300 text-lg font-sans font-semibold rounded hover:bg-gray-100 transition"

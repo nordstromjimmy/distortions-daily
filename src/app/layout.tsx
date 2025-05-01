@@ -4,6 +4,7 @@ import Header from "./components/Header";
 import Analytics from "./components/Analytics";
 
 export const metadata = {
+  metadataBase: new URL("https://distortionsdaily.com"),
   title:
     "Distortions Daily - daily satirical news twists from a universe slightly off course",
   icons: {

@@ -27,6 +27,7 @@ Generate a daily edition including:
    - Business
    - Technology
    - Culture
+   - Science
    - Sports
    - Weather (can be surreal/poetic if needed)
 3. A short 'Letter from a Citizen' (fictional citizen reflecting on the world satirically and sometimes with a mindset of a real conspiracy theorist).
