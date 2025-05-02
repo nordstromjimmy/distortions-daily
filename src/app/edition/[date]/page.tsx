@@ -1,4 +1,5 @@
-"use client";
+export const dynamic = "force-dynamic";
+("use client");
 import CitizenLetter from "@/app/components/CitizenLetter";
 import ShareButton from "@/app/components/ShareButton";
 import WeatherSection from "@/app/components/WeatherSection";
