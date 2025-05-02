@@ -1,5 +1,4 @@
-export const dynamic = "force-dynamic";
-("use client");
+"use client";
 import CitizenLetter from "@/app/components/CitizenLetter";
 import ShareButton from "@/app/components/ShareButton";
 import WeatherSection from "@/app/components/WeatherSection";
@@ -9,6 +8,8 @@ import { useEffect, useState } from "react";
 import { use } from "react";
 import { Toaster, toast } from "sonner";
 import { Star } from "lucide-react";
+
+export const dynamic = "force-dynamic";
 
 interface Headline {
   title: string;
