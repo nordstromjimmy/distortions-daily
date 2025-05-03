@@ -38,20 +38,6 @@ const client = new Client()
 const account = new Account(client);
 const databases = new Databases(client);
 
-// Helper to fetch the edition JSON
-async function fetchEdition(date: string): Promise<Edition | null> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/data/${date}.json`
-    );
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (error) {
-    console.error("Failed to load edition:", error);
-    return null;
-  }
-}
-
 export default function EditionClient({
   date,
   edition: initialEdition,
@@ -59,71 +45,56 @@ export default function EditionClient({
   date: string;
   edition: Edition | null;
 }) {
-  const [edition, setEdition] = useState<Edition | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const [edition] = useState<Edition | null>(initialEdition);
+  const [isLoading, setIsLoading] = useState(false);
   const [futureMode, setFutureMode] = useState(false);
   const [favoriteId, setFavoriteId] = useState<string | null>(null);
   const router = useRouter();
 
-  console.log("🔁 Checking for edition file:", `/public/data/${date}.json`);
-
   useEffect(() => {
-    const loadEdition = async () => {
-      try {
-        // ✅ Get local date in YYYY-MM-DD format (safe from timezone bugs)
-        const localToday = new Date(
-          Date.now() - new Date().getTimezoneOffset() * 60000
-        )
-          .toISOString()
-          .split("T")[0];
+    const checkEditionAccess = async () => {
+      const localToday = new Date(
+        Date.now() - new Date().getTimezoneOffset() * 60000
+      )
+        .toISOString()
+        .split("T")[0];
 
-        // ✅ Compare directly as strings — safe and simple
-        if (date > localToday) {
-          setFutureMode(true);
-          setIsLoading(false);
+      if (date > localToday) {
+        setFutureMode(true);
+        return;
+      }
+
+      if (date < localToday) {
+        // Require login for archive
+        try {
+          await account.get();
+        } catch {
+          router.push("/login");
           return;
         }
+      }
 
-        if (date < localToday) {
-          // ✅ Archive access — must be logged in
-          try {
-            await account.get();
-          } catch (error) {
-            router.push("/login");
-            return;
-          }
-        }
+      // Check if edition is favorited
+      try {
+        const user = await account.get();
 
-        // ✅ Load edition JSON
-        const fetchedEdition = await fetchEdition(date);
-        setEdition(fetchedEdition);
+        const response = await databases.listDocuments(
+          process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
+          process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
+          [Query.equal("userId", user.$id), Query.equal("editionDate", date)]
+        );
 
-        // ✅ If user is logged in, check for saved favorite
-        try {
-          const user = await account.get();
-
-          const response = await databases.listDocuments(
-            process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
-            process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
-            [Query.equal("userId", user.$id), Query.equal("editionDate", date)]
-          );
-
-          if (response.total > 0) {
-            setFavoriteId(response.documents[0].$id);
-          } else {
-            setFavoriteId(null);
-          }
-        } catch (error) {
+        if (response.total > 0) {
+          setFavoriteId(response.documents[0].$id);
+        } else {
           setFavoriteId(null);
         }
-      } catch (error) {
-        console.error("Failed to load edition:", error);
-      } finally {
-        setIsLoading(false);
+      } catch {
+        setFavoriteId(null);
       }
     };
 
-    loadEdition();
+    checkEditionAccess();
   }, [date, router]);
 
   const handleFavorite = async () => {
