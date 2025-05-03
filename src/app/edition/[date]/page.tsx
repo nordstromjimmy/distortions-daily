@@ -3,7 +3,32 @@ export const dynamicParams = true;
 
 import fs from "fs/promises";
 import path from "path";
+import type { Metadata } from "next";
 import EditionClient from "@/app/components/EditionClient";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { date: string };
+}): Promise<Metadata> {
+  const { date } = params;
+
+  return {
+    title: `Distortions Daily – Edition ${date}`,
+    description: `Read the absurd headlines of ${date} from an alternate reality.`,
+    openGraph: {
+      title: `Distortions Daily – ${date}`,
+      description: `Explore today's satire from another timeline.`,
+      images: [`/images/${date}.png`],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `Distortions Daily – ${date}`,
+      description: `Read the absurd headlines of ${date} from an alternate reality.`,
+      images: [`/images/${date}.png`],
+    },
+  };
+}
 
 export default async function EditionPage({
   params,

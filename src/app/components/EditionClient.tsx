@@ -1,12 +1,13 @@
 "use client";
+
 import { useEffect, useState } from "react";
-import { Account, Client, Databases, ID, Query } from "appwrite";
 import { useRouter } from "next/navigation";
+import { Account, Client, Databases, ID, Query } from "appwrite";
 import { Toaster, toast } from "sonner";
 import { Star } from "lucide-react";
-import CitizenLetter from "@/app/components/CitizenLetter";
-import ShareButton from "@/app/components/ShareButton";
-import WeatherSection from "@/app/components/WeatherSection";
+import ShareButton from "./ShareButton";
+import CitizenLetter from "./CitizenLetter";
+import WeatherSection from "./WeatherSection";
 
 interface Headline {
   title: string;
@@ -45,14 +46,13 @@ export default function EditionClient({
   date: string;
   edition: Edition | null;
 }) {
-  const [edition] = useState<Edition | null>(initialEdition);
-  const [isLoading, setIsLoading] = useState(false);
+  const [edition] = useState(initialEdition);
   const [futureMode, setFutureMode] = useState(false);
   const [favoriteId, setFavoriteId] = useState<string | null>(null);
   const router = useRouter();
 
   useEffect(() => {
-    const checkEditionAccess = async () => {
+    const checkAccess = async () => {
       const localToday = new Date(
         Date.now() - new Date().getTimezoneOffset() * 60000
       )
@@ -65,7 +65,6 @@ export default function EditionClient({
       }
 
       if (date < localToday) {
-        // Require login for archive
         try {
           await account.get();
         } catch {
@@ -74,53 +73,36 @@ export default function EditionClient({
         }
       }
 
-      // Check if edition is favorited
       try {
         const user = await account.get();
-
         const response = await databases.listDocuments(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
           process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
           [Query.equal("userId", user.$id), Query.equal("editionDate", date)]
         );
 
-        if (response.total > 0) {
-          setFavoriteId(response.documents[0].$id);
-        } else {
-          setFavoriteId(null);
-        }
+        setFavoriteId(response.total > 0 ? response.documents[0].$id : null);
       } catch {
         setFavoriteId(null);
       }
     };
 
-    checkEditionAccess();
+    checkAccess();
   }, [date, router]);
 
   const handleFavorite = async () => {
     try {
-      let user;
-      try {
-        user = await account.get();
-      } catch (error) {
-        toast.success("You need to be logged in to save favorites!");
-        //console.error("User not logged in, redirecting to login...");
-        //router.push("/login");
-        return;
-      }
+      const user = await account.get();
 
       if (favoriteId) {
-        // ⭐ Already favorited ➔ Unfavorite it
         await databases.deleteDocument(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
           process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
           favoriteId
         );
-
         toast.success("Removed from Favorites!");
         setFavoriteId(null);
       } else {
-        // 🆕 Not yet favorited ➔ Favorite it
         const response = await databases.createDocument(
           process.env.NEXT_PUBLIC_APPWRITE_DATABASE_ID!,
           process.env.NEXT_PUBLIC_APPWRITE_FAVORITES_COLLECTION_ID!,
@@ -132,23 +114,14 @@ export default function EditionClient({
             imageUrl: edition?.headlines[0]?.imageUrl || "",
           }
         );
-
         toast.success("Added to Favorites!");
         setFavoriteId(response.$id);
       }
     } catch (error: any) {
-      console.error("Failed to handle favorite:", error.message);
-      toast.error("Something went wrong. Please try again.");
+      console.error("Favorite error:", error.message);
+      toast.error("Something went wrong!");
     }
   };
-
-  if (isLoading) {
-    return (
-      <main className="flex items-center justify-center min-h-screen">
-        <p className="text-gray-500 animate-pulse">Loading edition...</p>
-      </main>
-    );
-  }
 
   if (futureMode) {
     return (
@@ -176,7 +149,6 @@ export default function EditionClient({
   return (
     <main className="min-h-screen bg-gray-100 text-gray-900">
       <div className="max-w-6xl mx-auto p-6 space-y-16">
-        {/* Featured Story */}
         {featured && (
           <article className="bg-white rounded-md shadow-md overflow-hidden">
             {featured.imageUrl && (
@@ -202,7 +174,6 @@ export default function EditionClient({
                 <p className="text-xs text-gray-500">
                   Author: {featured.author}
                 </p>
-
                 <ShareButton
                   title={featured.title}
                   url={`${process.env.NEXT_PUBLIC_BASE_URL}/edition/${date}`}
@@ -212,7 +183,6 @@ export default function EditionClient({
           </article>
         )}
 
-        {/* Rest of Headlines */}
         <section className="grid gap-8 md:grid-cols-2">
           {rest.map((headline, idx) => (
             <article
@@ -232,7 +202,6 @@ export default function EditionClient({
                 <p className="text-xs text-gray-500">
                   Author: {headline.author}
                 </p>
-
                 <ShareButton
                   title={headline.title}
                   url={`${process.env.NEXT_PUBLIC_BASE_URL}/edition/${date}`}
@@ -242,18 +211,18 @@ export default function EditionClient({
           ))}
         </section>
 
-        {/* Weather Section */}
         <WeatherSection
           weather={edition.weather}
           temperature={edition.temperature}
         />
-        {/* Letter from a Citizen */}
+
         <CitizenLetter
           name={edition.letterFromCitizen.name}
           letter={edition.letterFromCitizen.letter}
           date={date}
         />
       </div>
+
       <div className="flex justify-center mt-2 mb-8">
         <Toaster />
         <button
