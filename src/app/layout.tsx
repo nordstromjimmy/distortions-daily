@@ -53,7 +53,7 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-gray-100 text-gray-900 min-h-screen flex flex-col">
-        <Analytics /> {/* 👈 Add your scripts here safely */}
+        <Analytics />
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />
