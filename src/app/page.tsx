@@ -1,7 +1,10 @@
+"use client";
 import { Newspaper } from "lucide-react";
 import Link from "next/link";
+import { useEffect, useState } from "react";
+import { getLocalToday } from "./lib/date";
 
-export const metadata = {
+/* export const metadata = {
   title: "Distortions Daily - Satirical News From Another Reality",
   description:
     "Daily transmissions from a world almost like ours... but not quite. Satirical takes on today's real events.",
@@ -28,10 +31,15 @@ export const metadata = {
       "Explore daily news with a satirical twist, only at Distortions Daily.",
     images: ["/og-image.png"],
   },
-};
+}; */
 
 export default function LandingPage() {
-  const today = new Date().toISOString().split("T")[0];
+  const [today, setToday] = useState<string | null>(null);
+  useEffect(() => {
+    setToday(getLocalToday());
+  }, []);
+
+  if (!today) return null;
   return (
     <main className="min-h-screen bg-gray-100 flex flex-col justify-center items-center space-y-6 px-6">
       {/* Icon */}

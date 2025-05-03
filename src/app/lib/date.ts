@@ -3,9 +3,7 @@
 /**
  * Returns the current local date in 'YYYY-MM-DD' format,
  * adjusted for the user's local timezone.
- *
- * NOT USED ANYWHERE YET
- *
+
  */
 export function getLocalToday(): string {
   const now = new Date();
