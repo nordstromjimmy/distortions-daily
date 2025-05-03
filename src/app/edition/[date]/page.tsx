@@ -42,20 +42,6 @@ client
 const account = new Account(client);
 const databases = new Databases(client);
 
-// Helper to fetch the edition JSON
-async function fetchEdition(date: string): Promise<Edition | null> {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_URL}/data/${date}.json`
-    );
-    if (!res.ok) return null;
-    return await res.json();
-  } catch (error) {
-    console.error("Failed to load edition:", error);
-    return null;
-  }
-}
-
 export default function EditionPage({
   params,
 }: {
@@ -68,7 +54,19 @@ export default function EditionPage({
   const [favoriteId, setFavoriteId] = useState<string | null>(null);
   const router = useRouter();
 
-  console.log("🔁 Checking for edition file:", `/public/data/${date}.json`);
+  // Helper to fetch the edition JSON
+  async function fetchEdition(date: string): Promise<Edition | null> {
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_BASE_URL}/data/${date}.json`
+      );
+      if (!res.ok) return null;
+      return await res.json();
+    } catch (error) {
+      console.error("Failed to load edition:", error);
+      return null;
+    }
+  }
 
   useEffect(() => {
     const loadEdition = async () => {
