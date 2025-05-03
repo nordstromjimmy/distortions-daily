@@ -1,13 +1,12 @@
 "use client";
+import { useEffect, useState } from "react";
+import { Account, Client, Databases, ID, Query } from "appwrite";
+import { useRouter } from "next/navigation";
+import { Toaster, toast } from "sonner";
+import { Star } from "lucide-react";
 import CitizenLetter from "@/app/components/CitizenLetter";
 import ShareButton from "@/app/components/ShareButton";
 import WeatherSection from "@/app/components/WeatherSection";
-import { Account, Client, Databases, ID, Query } from "appwrite";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import { use } from "react";
-import { Toaster, toast } from "sonner";
-import { Star } from "lucide-react";
 
 interface Headline {
   title: string;
@@ -32,8 +31,7 @@ interface Edition {
   };
 }
 
-const client = new Client();
-client
+const client = new Client()
   .setEndpoint(process.env.NEXT_PUBLIC_APPWRITE_ENDPOINT!)
   .setProject(process.env.NEXT_PUBLIC_APPWRITE_PROJECT_ID!);
 
@@ -66,6 +64,8 @@ export default function EditionClient({
   const [futureMode, setFutureMode] = useState(false);
   const [favoriteId, setFavoriteId] = useState<string | null>(null);
   const router = useRouter();
+
+  console.log("🔁 Checking for edition file:", `/public/data/${date}.json`);
 
   useEffect(() => {
     const loadEdition = async () => {
